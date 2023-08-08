@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NoteModule } from './note/note.module';
 import { ListModule } from './list/list.module';
+import { Note } from './note/entities/note.entity';
+import { List } from './list/entities/list.entity';
 
 @Module({
   imports: [
@@ -11,10 +13,10 @@ import { ListModule } from './list/list.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'root',
+      username: 'postgres',
       password: 'root',
       database: 'todoDB',
-      entities: [],
+      entities: [Note, List],
       synchronize: true,
     }),
     NoteModule,
