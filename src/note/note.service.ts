@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Like, Repository } from 'typeorm';
 import { Note } from './entities/note.entity';
 
 @Injectable()
@@ -27,8 +27,19 @@ export class NoteService {
     return this.noteRepository.find();
   }
 
+  findFavorites(): Promise<Note[]> {
+    return this.noteRepository.find({ where: { isFavorite: true } });
+  }
+
   findOne(id: number): Promise<Note | null> {
     return this.noteRepository.findOneBy({ id: id });
+  }
+
+  search(value: string): Promise<Note[] | []> {
+    return this.noteRepository
+      .createQueryBuilder('note')
+      .where('note.content like :value', { value: `%${value}%` })
+      .getMany();
   }
 
   update(id: number, updateNoteDto: UpdateNoteDto): Promise<Note> {
