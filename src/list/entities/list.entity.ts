@@ -11,7 +11,7 @@ export class List {
 
   @Column({
     nullable: false,
-    type: 'int',
+    type: 'bigint',
     name: 'date_created',
     // default: '',
   })
