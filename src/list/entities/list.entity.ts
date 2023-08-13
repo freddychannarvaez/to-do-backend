@@ -36,8 +36,9 @@ export class List {
   })
   isFavorite: boolean;
 
-  @Column({
-    type: 'json',
+  @Column("int", {
+    array: true,
+    nullable: true,
   })
   notes: Note[];
 

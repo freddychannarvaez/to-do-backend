@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { List } from './entities/list.entity';
 
 @Injectable()
@@ -30,16 +30,19 @@ export class ListService {
     return this.listRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateListDto: UpdateListDto): Promise<List> {
+  async update(id: number, updateListDto: UpdateListDto): Promise<UpdateResult> {
+    const oldList = await this.listRepository.findOneBy({ id: id });
     const list: List = new List();
-    list.id = updateListDto.id ?? 0;
-    list.dateCreated = updateListDto.dateCreated ?? 0;
-    list.title = updateListDto.title ?? '';
     list.isArchived = updateListDto.isArchived ?? false;
     list.isFavorite = updateListDto.isFavorite ?? false;
     list.position = updateListDto.position ?? 0;
-    list.notes = updateListDto.notes ?? [];
-    return this.listRepository.save(list);
+    list.notes = [...updateListDto.notes!] ?? [];
+
+    return this.listRepository.update({
+      ...oldList
+    }, {
+      ...list
+    });
   }
 
   remove(id: number): Promise<DeleteResult> {
