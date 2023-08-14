@@ -9,6 +9,7 @@ import { List } from './list/entities/list.entity';
 
 @Module({
   imports: [
+    // DB Setup
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

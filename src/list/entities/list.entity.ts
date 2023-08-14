@@ -5,7 +5,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class List {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    // name: 'id',
   })
   id: number;
 
@@ -13,7 +12,6 @@ export class List {
     nullable: false,
     type: 'bigint',
     name: 'date_created',
-    // default: '',
   })
   dateCreated: number;
 

@@ -4,7 +4,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Note {
   @PrimaryGeneratedColumn({
     type: 'bigint',
-    // name: 'id',
   })
   id: number;
 
@@ -12,12 +11,10 @@ export class Note {
     nullable: false,
     type: 'bigint',
     name: 'date_created',
-    // default: '',
   })
   dateCreated: number;
 
   @Column({
-    // nullable: false,
     type: 'varchar',
     default: '',
   })

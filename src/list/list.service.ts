@@ -11,6 +11,11 @@ export class ListService {
     @InjectRepository(List) private readonly listRepository: Repository<List>,
   ) {}
 
+  /**
+   * Creates a list.
+   * @param createListDto List data.
+   * @returns A promise containing the list data.
+   */
   create(createListDto: CreateListDto): Promise<List> {
     const list: List = new List();
     list.dateCreated = createListDto.dateCreated;
@@ -22,14 +27,29 @@ export class ListService {
     return this.listRepository.save(list);
   }
 
+  /**
+   * Finds all lists.
+   * @returns A promise containing the list array.
+   */
   findAll(): Promise<List[]> {
     return this.listRepository.find();
   }
 
+  /**
+   * Finds one list by id.
+   * @param id Id of the list to find.
+   * @returns A promise containing the list or null in case it was not found.
+   */
   findOne(id: number): Promise<List | null> {
     return this.listRepository.findOneBy({ id: id });
   }
 
+  /**
+   * Update a list by id.
+   * @param id Id of the list to update.
+   * @param updateListDto List data.
+   * @returns A promise containing the update result.
+   */
   async update(id: number, updateListDto: UpdateListDto): Promise<UpdateResult> {
     const oldList = await this.listRepository.findOneBy({ id: id });
     const list: List = new List();
@@ -45,6 +65,11 @@ export class ListService {
     });
   }
 
+  /**
+   * Deletes a list.
+   * @param id Id of the list to delete.
+   * @returns A primise containing the delete result.
+   */
   remove(id: number): Promise<DeleteResult> {
     return this.listRepository.delete(id);
   }
