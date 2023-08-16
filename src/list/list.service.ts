@@ -53,6 +53,7 @@ export class ListService {
   async update(id: number, updateListDto: UpdateListDto): Promise<UpdateResult> {
     const oldList = await this.listRepository.findOneBy({ id: id });
     const list: List = new List();
+    list.title = updateListDto.title ?? '';
     list.isArchived = updateListDto.isArchived ?? false;
     list.isFavorite = updateListDto.isFavorite ?? false;
     list.position = updateListDto.position ?? 0;
